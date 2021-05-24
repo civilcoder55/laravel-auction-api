@@ -1,0 +1,692 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel AuctionAPI Demo Documentation",
+        "description": "AuctionAPI Demo Project",
+        "contact": {
+            "email": ""
+        },
+        "license": {
+            "name": "",
+            "url": ""
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "local API Server"
+        }
+    ],
+    "paths": {
+        "/auctions": {
+            "get": {
+                "tags": [
+                    "Auctions"
+                ],
+                "summary": "Get list of auctions",
+                "description": "Returns list of auctions",
+                "operationId": "getAuctionsList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuctionResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/auction/{id}": {
+            "get": {
+                "tags": [
+                    "Auctions"
+                ],
+                "summary": "Get Auction information",
+                "description": "Returns Auction data",
+                "operationId": "getAuctionById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Auction id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Auction"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Auctions"
+                ],
+                "summary": "bid on existing Auction",
+                "description": "Returns updated auction data",
+                "operationId": "bidAuction",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Auction id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BidAuctionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Auction"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/auction": {
+            "post": {
+                "tags": [
+                    "Auctions"
+                ],
+                "summary": "Store new auction",
+                "description": "Returns Auction data",
+                "operationId": "storeAuction",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreAuctionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Auction"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Invalid data"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/auction/{id}/upload": {
+            "post": {
+                "tags": [
+                    "Auctions"
+                ],
+                "summary": "upload images on existing Auction",
+                "description": "Returns updated auction data",
+                "operationId": "uploadAuctionImage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Auction id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuctionImageUploadRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Auction"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    },
+                    "422": {
+                        "description": "Invalid data"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register new user",
+                "description": "Returns New User data",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "422": {
+                        "description": "Invalid data"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login exsisting user",
+                "description": "Returns User data",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Credentials Error"
+                    },
+                    "422": {
+                        "description": "Invalid Data"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Logout user",
+                "description": "Revoke User tokens",
+                "operationId": "logoutUser",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tokens Revoked"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Invalid Data"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/me": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "User info",
+                "description": "Returns User Data",
+                "operationId": "InfoUser",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Invalid Data"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuctionImageUploadRequest": {
+                "title": "Auction Image Upload request",
+                "description": "Auction Image Upload request body data",
+                "required": [
+                    "images"
+                ],
+                "properties": {
+                    "images": {
+                        "title": "Images",
+                        "description": "Auction images",
+                        "type": "array",
+                        "items": {
+                            "type": "file"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "BidAuctionRequest": {
+                "title": "Bid Auction request",
+                "description": "Bid Auction request body data",
+                "required": [
+                    "bid"
+                ],
+                "properties": {
+                    "bid": {
+                        "title": "Bid",
+                        "description": "your bid on auction",
+                        "type": "integer",
+                        "example": "50"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginUserRequest": {
+                "title": "Login User request",
+                "description": "Login User request body data",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "Email of the User Account",
+                        "type": "string",
+                        "format": "email",
+                        "example": "john@test.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password of the User Account",
+                        "type": "string",
+                        "format": "password",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "Auction": {
+                "title": "Auction",
+                "description": "Auction model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the new Auction",
+                        "type": "string",
+                        "example": "used ps4 controller"
+                    },
+                    "owner": {
+                        "title": "Owner",
+                        "description": "Auction owner email",
+                        "type": "string",
+                        "example": "owner@test.com"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "description": "Auction status",
+                        "type": "string",
+                        "enum": [
+                            "OPEN",
+                            "CLOSED"
+                        ],
+                        "example": "OPEN"
+                    },
+                    "bid": {
+                        "title": "Bid",
+                        "description": "Auction highest bid",
+                        "type": "integer",
+                        "example": "50"
+                    },
+                    "ending_at": {
+                        "title": "Ending at",
+                        "description": "Auction Ending Date",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "highest_bidder": {
+                        "title": "Highest Bidder",
+                        "description": "Auction highest bidder email",
+                        "type": "string",
+                        "example": "bidder@test.com"
+                    },
+                    "images": {
+                        "title": "Images",
+                        "description": "Auction images",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "description": "Image ID",
+                                    "type": "integer"
+                                },
+                                "url": {
+                                    "description": "Image URL",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "example": [
+                            {
+                                "id": 1,
+                                "url": "http://127.0.0.1:8000/storage/images/nK3sGDCqNYKbMAHE6bzXSl93kKViayo2LpSqkr46.png"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Auction"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the User",
+                        "type": "string",
+                        "example": "john doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email of the User Account",
+                        "type": "string",
+                        "format": "email",
+                        "example": "john@test.com"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "User Created at Date",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "RegisterUserRequest": {
+                "title": "Register User request",
+                "description": "Register User request body data",
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new User",
+                        "type": "string",
+                        "example": "john doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email of the new User Account",
+                        "type": "string",
+                        "format": "email",
+                        "example": "john@test.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password of the new User Account",
+                        "type": "string",
+                        "format": "password",
+                        "example": "password"
+                    },
+                    "password_confirmation": {
+                        "title": "password confirmation",
+                        "description": "Password confirmation of the new User Account",
+                        "type": "string",
+                        "format": "password",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "AuctionResource": {
+                "title": "AuctionResource",
+                "description": "Auction resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "ref": null
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "AuctionResource"
+                }
+            },
+            "StoreAuctionRequest": {
+                "title": "Store Auction request",
+                "description": "Store Auction request body data",
+                "required": [
+                    "title"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Title of the new Auction",
+                        "type": "string",
+                        "example": "used ps4 controller"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
