@@ -3,13 +3,6 @@
     "info": {
         "title": "Laravel AuctionAPI Demo Documentation",
         "description": "AuctionAPI Demo Project",
-        "contact": {
-            "email": ""
-        },
-        "license": {
-            "name": "",
-            "url": ""
-        },
         "version": "1.0.0"
     },
     "servers": [

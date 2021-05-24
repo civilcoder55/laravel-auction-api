@@ -16,13 +16,7 @@ class Controller extends BaseController
      *      version="1.0.0",
      *      title="Laravel AuctionAPI Demo Documentation",
      *      description="AuctionAPI Demo Project",
-     *      @OA\Contact(
-     *          email=""
-     *      ),
-     *      @OA\License(
-     *          name="",
-     *          url=""
-     *      )
+     *
      * )
      *  @OA\SecurityScheme(
      *   securityScheme="Bearer",
